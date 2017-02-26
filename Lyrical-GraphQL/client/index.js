@@ -4,27 +4,29 @@ import thunk from 'redux-thunk';
 import createLogger from 'redux-logger';
 import promise from 'redux-promise';
 import ReactDOM from 'react-dom';
-import  ApolloCient from 'apollo-client';
-import { ApolloProvider } from 'react-apollo';
-import reducers from './reducers';
+import { Router, Route, hashHistory, IndexRoute } from 'react-router';
 
+import ApolloCient from 'apollo-client';
+import { ApolloProvider } from 'react-apollo';
+
+import App from './Components/App';
 import SongList from './Components/SongList';
+import SongCreate from './Components/SongCreate';
 
 const client = new ApolloCient();
 const logger = createLogger({
-  collapsed:true,
-  diff:true,
+  collapsed: true,
+  diff: true,
 });
 const store = createStore(
   combineReducers({
     apollo: client.reducer(),
-    reducers,
   }),
   {},
   compose(
-    applyMiddleware(client.middleware(),thunk, promise, logger),
+    applyMiddleware(client.middleware(), thunk, promise, logger),
     // If you are using the devToolsExtension, you can add it here also
-   // window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
+    // window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
   )
 );
 
@@ -32,7 +34,12 @@ const store = createStore(
 const Root = () => {
   return (
     <ApolloProvider store={store} client={client}>
-      <SongList />
+      <Router history={hashHistory}>
+        <Route path="/" component={App}>
+          <IndexRoute component={SongList} />
+          <Route path="songs/new" component={SongCreate}/>
+        </Route>
+      </Router>
     </ApolloProvider>
   );
 };
