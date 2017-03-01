@@ -1,14 +1,40 @@
-import React, { Component } from 'react';
+import React, { Component, StyleSheet } from 'react';
 import { Link } from 'react-router';
 import { graphql } from 'react-apollo';
 
 import fetchSongsQuery from './../queries/fetchSongs';
+import deleteSongQuery from './../queries/deleteSong';
 
 class SongList extends Component {
+
+  onSongDelete(id) {
+    this.props.mutate({
+      variables: { id },
+    }).then(() => this.props.data.refetch()); // refetch is an alternative to refetchQueries:
+  }
+
   renderSongs() {
-    return this.props.data.songs.map(song => {
+
+    const liStyle = {
+      justifyContent: 'space-between',
+    };
+
+    return this.props.data.songs.map(({ id, title }) => {
       return (
-        <li className="collection-item" key={song.id}>{song.title}</li>
+        <li
+          className="collection-item valign-wrapper"
+          style={liStyle}
+          key={id}>
+          {title}
+          <a className="btn-floating right red accent-2">
+            <i
+              className="material-icons"
+              onClick={() => this.onSongDelete(id)}
+            >
+              delete
+            </i>
+          </a>
+        </li>
       )
     })
   }
@@ -36,4 +62,7 @@ class SongList extends Component {
   }
 }
 
-export default graphql(fetchSongsQuery)(SongList);
+
+export default graphql(deleteSongQuery)(
+  graphql(fetchSongsQuery)(SongList)
+);
