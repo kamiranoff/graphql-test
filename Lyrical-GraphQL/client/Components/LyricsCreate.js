@@ -31,24 +31,21 @@ class LyricsCreate extends Component {
       variables: {
         lyrics,
         id: this.props.id,
-      },
-      // refetchQueries: [{
-      //   query: fetchSong,
-      // }]
+      }
     })
       .then(() => {
-      hashHistory.push('/')
+        this.setState({lyrics: ''});
     });
   }
 
   render() {
     return (
       <form onSubmit={() => this.onSubmit(event)}>
-        <textarea
-          defaultValue={this.state.lyrics}
+        <label>Add Lyrics</label>
+        <input
+          placeholder="Add a lyric"
           onChange={(event) => this.onChange(event.target.value)}
-        >
-        </textarea>
+        />
         <button
           onSubmit={() => this.onSubmit(event)}
           className="btn-floating btn-large teal lighten-2 waves-effect waves-light right"
