@@ -14,7 +14,6 @@ class SongList extends Component {
   }
 
   renderSongs() {
-
     const liStyle = {
       justifyContent: 'space-between',
     };
@@ -25,7 +24,9 @@ class SongList extends Component {
           className="collection-item valign-wrapper"
           style={liStyle}
           key={id}>
+          <Link to={`/songs/${title}/${id}`}>
           {title}
+          </Link>
           <a className="btn-floating right red accent-2">
             <i
               className="material-icons"
@@ -40,14 +41,12 @@ class SongList extends Component {
   }
 
   render() {
-
     if (this.props.data.loading) {
       return <div>Loading...</div>
     }
 
     return (
       <div>
-
         <ul className="collection">
           {this.renderSongs()}
         </ul>
@@ -61,7 +60,6 @@ class SongList extends Component {
     )
   }
 }
-
 
 export default graphql(deleteSongQuery)(
   graphql(fetchSongsQuery)(SongList)
