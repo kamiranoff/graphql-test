@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
-import { hashHistory } from 'react-router';
 import { graphql } from 'react-apollo';
 
-import gql from 'graphql-tag';
-
-import fetchSong from '../queries/fetchSong';
 import addLyrics from '../queries/addLyrics';
 
 class LyricsCreate extends Component {
@@ -13,28 +9,27 @@ class LyricsCreate extends Component {
     super(props);
 
     this.onSubmit = this.onSubmit.bind(this);
-    this.state = { lyrics: props.lyrics };
+    this.state = { lyric: '' };
   }
 
-  onChange(lyrics) {
+  onChange(lyric) {
     this.setState({
-      lyrics
+      lyric
     });
   }
 
   onSubmit(event) {
     event.preventDefault();
 
-    console.log(this.state.lyrics);
-    const lyrics = this.state.lyrics;
+    const lyric = this.state.lyric;
     this.props.mutate({
       variables: {
-        lyrics,
+        lyric,
         id: this.props.id,
       }
     })
       .then(() => {
-        this.setState({lyrics: ''});
+        this.setState({lyric: ''});
     });
   }
 
@@ -45,6 +40,7 @@ class LyricsCreate extends Component {
         <input
           placeholder="Add a lyric"
           onChange={(event) => this.onChange(event.target.value)}
+          value={this.state.lyric}
         />
         <button
           onSubmit={() => this.onSubmit(event)}
