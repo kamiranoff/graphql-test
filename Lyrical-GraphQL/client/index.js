@@ -9,12 +9,17 @@ import { Router, Route, hashHistory, IndexRoute } from 'react-router';
 import ApolloCient from 'apollo-client';
 import { ApolloProvider } from 'react-apollo';
 
+require('./style/style.css');
+
 import App from './Components/App';
 import SongList from './Components/SongList';
 import SongCreate from './Components/SongCreate';
 import SongDetail from './Components/SongDetail';
 
-const client = new ApolloCient();
+const client = new ApolloCient({
+ dataIdFromObject: o => o.id,
+});
+
 const logger = createLogger({
   collapsed: true,
   diff: true,
