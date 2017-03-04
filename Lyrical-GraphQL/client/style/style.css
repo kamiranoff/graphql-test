@@ -1,3 +1,13 @@
 body {
-  background-color: azure;
+  background-color: #fefcfa;
+}
+
+ul.collection {
+  padding: 40px 20px;
+}
+
+ul.collection li.collection-item {
+  background-color: transparent;
+  font-size: 18px;
+  border: none
 }
