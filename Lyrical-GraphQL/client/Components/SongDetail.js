@@ -13,8 +13,8 @@ class SongDetail extends Component {
   }
 
   render() {
-    console.log('constructor', this.props);
-    if (this.props.data.loading) {
+    const { song } = this.props.data;
+    if (!song) {
       return <div>Loading...</div>
     }
 
@@ -23,8 +23,8 @@ class SongDetail extends Component {
         <Link to="/">
           back
         </Link>
-        <h1>{this.props.data.song.title}</h1>
-        <LyricList />
+        <h1>{song.title}</h1>
+        <LyricList lyrics={song.lyrics} />
         <LyricsCreate
           id={this.props.params.id}
         />
