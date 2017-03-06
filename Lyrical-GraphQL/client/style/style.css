@@ -11,3 +11,8 @@ ul.collection li.collection-item {
   font-size: 18px;
   border: none
 }
+
+.liked {
+  color:goldenrod;
+  vertical-align: middle;
+}
